@@ -1,18 +1,16 @@
 import { View, Text, StyleSheet } from "react-native";
-import { Link } from "expo-router";
 
-export default function HomePage(){
+export default function UserPage(){
     return (
         <View style={styles.container}>
-            <Text>Teste</Text>
-            <Link href="/userNomeComposto">Ir para userNomeComposto</Link>
+            <Text>User Page</Text>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "lightblue",
+        backgroundColor: "lightpink",
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
