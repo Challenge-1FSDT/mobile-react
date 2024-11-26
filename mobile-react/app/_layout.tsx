@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet } from "react-native";
-import { Stack } from  "expo-router";
+import { Stack, Tabs } from  "expo-router";
 
 export default function RootLayout(){
     return (
-        <Stack> 
-            <Stack.Screen name="index" />
-            <Stack.Screen name="userNomeComposto" options={{headerTitle: "User"}}/>
-        </Stack>
+        <Tabs> 
+            <Tabs.Screen name="index" />
+            <Tabs.Screen name="userNomeComposto" options={{headerTitle: "User"}}/>
+            <Tabs.Screen name="usuario/[usuarioId]"/>
+        </Tabs>
     );
 }
 
