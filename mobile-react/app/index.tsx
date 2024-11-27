@@ -6,7 +6,7 @@ export default function HomePage(){
 
     function irParaUsuarioId(){
         const variavel = "abcdef123";
-        router.push(`/usuario/${variavel}`);
+        router.push(`/login/${variavel}`);
     }
 
 
@@ -14,7 +14,7 @@ export default function HomePage(){
         <View style={styles.container}>
             <Text>Teste</Text>
             <Link href="/userNomeComposto">Ir para userNomeComposto</Link>
-            <Link href="/usuario/123456789abcde">Ir para Usuario</Link>
+            <Link href="/login/123456789abcde">Ir para Usuario</Link>
             <Button title="Go to random usuario" onPress={irParaUsuarioId}></Button>
         </View>
     );
