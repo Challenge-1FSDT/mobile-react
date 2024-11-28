@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Button } from "react-native";
 import { Link, router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
+import Navbar from "@/components/Navbar";
 
 export default function HomePage(){
 
@@ -12,9 +13,9 @@ export default function HomePage(){
 
     return (
         <View style={styles.container}>
-            <Text>Teste</Text>
-            <Link href="/userNomeComposto">Ir para userNomeComposto</Link>
-            <Link href="/login/123456789abcde">Ir para Usuario</Link>
+            <Navbar></Navbar>
+            <Link href="/userNomeComposto">  Ir para userNomeComposto</Link>
+            <Link href="/login/123456789abcde"> Ir para Usuario</Link>
             <Button title="Go to random usuario" onPress={irParaUsuarioId}></Button>
         </View>
     );
