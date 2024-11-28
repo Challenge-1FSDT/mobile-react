@@ -1,10 +1,12 @@
-'use client';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
+import Icon from '@fortawesome/fontawesome-svg-core'; // Usando FontAwesome para ícones
+//import { deletePost } from '../lib/posts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { FC, useEffect, useState } from 'react';
-import { FaEdit, FaTrashAlt } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
-import { deletePost } from '../lib/posts';
 
+// Definindo os tipos para as props do componente
 interface PostCardProps {
   id: string;
   title: string;
@@ -13,77 +15,143 @@ interface PostCardProps {
   onDelete: (id: string) => void;
 }
 
-const PostCard: FC<PostCardProps> = ({ id, title, description, author, onDelete }) => {
+
+export default function PostCard({
+  id,
+  title,
+  description,
+  author,
+  onDelete,
+}: PostCardProps) {
   const [token, setToken] = useState("");
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setToken(token ? token : "");
-  }, []);
-
   const router = useRouter();
 
+  useEffect(() => {
+    // Obter token do armazenamento local
+    const fetchToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        setToken(token || "");
+      } catch (error) {
+        console.error("Erro ao obter token:", error);
+      }
+    };
+    fetchToken();
+  }, []);
+
   const handleEdit = () => {
-    router.push(`posts/edit/${id}`);
+    //router.push(`posts/edit/${id}`);
   };
 
   const handleDelete = async () => {
-    if (confirm('Tem certeza que deseja deletar esse post?')) {
-      await deletePost(id);
-      onDelete(id); 
-      alert('Post deletado com sucesso'); 
-    } else {
-      alert('Post não deletado');
-    }
+    Alert.alert(
+      "Confirmação",
+      "Tem certeza que deseja deletar esse post?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Confirmar",
+          onPress: async () => {
+            //await deletePost(id);
+            //onDelete(id);
+            Alert.alert("Sucesso", "Post deletado com sucesso!");
+          },
+        },
+      ]
+    );
   };
 
   const handleReadMore = () => {
-    router.push(`/posts/${id}`);
+    //router.push(`/posts/${id}`);
   };
 
   return (
-    <div className="bg-[#C4BEE9] rounded-[20px] p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
-      <div className="flex justify-between">
-        <h2 className="text-2xl font-bold mb-2 text-gray-900">
-          {title}
-        </h2>
-      </div>
-      <p className="text-md text-[#5340C6]">Autor: {author}</p>
-
-      <p className="text-gray-700 mb-4">
-        {description}
-      </p>
-
-      <div className='flex w-full justify-end'>
-      {
-          token ? (
-            <div className="flex space-x-2 mr-2">
-              <button
-                onClick={handleEdit}
-                className="bg-[#9789F0] text-white flex justify-center items-center w-[30px] h-[30px] rounded-[15px] hover:bg-[#7565dd] transition-colors"
-              >
-                <FaEdit />
-              </button>
-              <button
-                onClick={handleDelete}
-                className="bg-[#5340C6] text-white flex justify-center items-center w-[30px] h-[30px] rounded-[15px] hover:bg-[#100451] transition-colors"
-              >
-                <FaTrashAlt />
-              </button>
-            </div>
-          ) : null
-        }
-
-        <button
-          onClick={handleReadMore}
-          className="bg-[#5340C6] text-white px-4 py-1 rounded-[20px] hover:bg-[#100451] transition-colors"
-        >
-          Leia mais
-        </button>
-
-      </div>
-    </div>
+    <View style={styles.card}>
+      <View style={styles.header}>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+      <Text style={styles.author}>Autor: {author}</Text>
+      <Text style={styles.description}>{description}</Text>
+      <View style={styles.actions}>
+        {token ? (
+          <View style={styles.editDeleteContainer}>
+            <TouchableOpacity onPress={handleEdit} style={styles.iconButton}>
+              <Icon name="edit" size={16} color="#FFF" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleDelete} style={styles.iconButton}>
+              <Icon name="trash" size={16} color="#FFF" />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+        <TouchableOpacity onPress={handleReadMore} style={styles.readMoreButton}>
+          <Text style={styles.readMoreText}>Leia mais</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
-};
+}
 
-export default PostCard;
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: "#C4BEE9",
+    borderRadius: 20,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    marginBottom: 16,
+    elevation: 5, // Sombra no Android
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 8,
+  },
+  author: {
+    fontSize: 14,
+    color: "#5340C6",
+    marginBottom: 8,
+  },
+  description: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 16,
+  },
+  actions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  editDeleteContainer: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  iconButton: {
+    backgroundColor: "#5340C6",
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 8,
+  },
+  readMoreButton: {
+    backgroundColor: "#5340C6",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  readMoreText: {
+    color: "#FFF",
+    fontSize: 14,
+  },
+});

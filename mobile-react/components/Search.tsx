@@ -1,46 +1,70 @@
-// Search.tsx
-'use client';
+import React, { useState } from 'react';
+import { View, Text, TextInput, FlatList, StyleSheet } from 'react-native';
+import PostCard from './PostCard'; // Certifique-se de que PostCard também foi adaptado para React Native
 
-import { useState } from "react";
-import { Post } from "../types/Post";
-import PostCard from "./PostCard";
-
-interface SearchProps {
-  posts: Post[];
-  onDelete: (id: string) => void; // Adicionando a propriedade onDelete
-}
-
-export default function Search({ posts, onDelete }: SearchProps) {
+export default function Search({ posts, onDelete }) {
   const [searchTerm, setSearchTerm] = useState('');
 
+  const filteredPosts = posts.filter((post) =>
+    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.content.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className='p-4'>
-      <h2 className='text-indigo-950 text-xl font-bold text-center mb-2'>Buscar postagens</h2>
-      <input
-        type='text'
-        placeholder='Título ou conteúdo de um post'
-        className='border border-indigo-900 p-2 w-full rounded-md text-black'
+    <View style={styles.container}>
+      <Text style={styles.heading}>Buscar postagens</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Título ou conteúdo de um post"
+        placeholderTextColor="#888"
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChangeText={setSearchTerm}
       />
-      <ul className='px-4 text-indigo-900 mt-6 overflow-y-auto h-[570px]'>
-        {posts
-          .filter((post: Post) => 
-            post.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-            post.content.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-          .map((post: Post) => (
-            <li key={post.id} className='p-2'>
-              <PostCard 
-                id={post.id} 
-                title={post.title} 
-                description={post.content} 
-                author={post.author} 
-                onDelete={onDelete} 
-              />
-            </li>
-          ))}
-      </ul>
-    </div>
+      <FlatList
+        data={filteredPosts}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.listItem}>
+            <PostCard
+              id={item.id}
+              title={item.title}
+              description={item.content}
+              author={item.author}
+              onDelete={onDelete}
+            />
+          </View>
+        )}
+        contentContainerStyle={styles.list}
+      />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+    backgroundColor: '#fff',
+    flex: 1,
+  },
+  heading: {
+    color: '#3f1f94',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#3f1f94',
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 16,
+    color: '#000',
+  },
+  list: {
+    paddingHorizontal: 8,
+  },
+  listItem: {
+    marginBottom: 8,
+  },
+});
