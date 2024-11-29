@@ -14,9 +14,7 @@ export default function HomePage(){
     return (
         <View style={styles.container}>
             <Navbar></Navbar>
-            <Link href="/userNomeComposto">  Ir para userNomeComposto</Link>
-            <Link href="/login/123456789abcde"> Ir para Usuario</Link>
-            <Button title="Go to random usuario" onPress={irParaUsuarioId}></Button>
+            
         </View>
     );
 }

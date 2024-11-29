@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 
@@ -8,10 +9,11 @@ export default function LoginForm(): JSX.Element {
 
   const handleLogin = () => {
     console.log({ userType, email, password });
-  0,};
+  };
 
   return (
     <View style={styles.container}>
+      <Navbar></Navbar>
       <Text style={styles.title}>LOGIN</Text>
 
       {/* User Type Selection */}

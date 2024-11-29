@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { Link } from "expo-router";
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -23,13 +23,12 @@ export default function Navbar() {
       <View style={styles.navbar}>
         <View style={styles.navContent}>
           {/* Logo */}
-          <TouchableOpacity 
-          /*onPress={() => navigation.navigate('Home')}*/
+          <Link href="index"
             >
             <Text style={styles.logo}>
               LEARN<Text style={styles.highlight}>ON</Text>
             </Text>
-          </TouchableOpacity>
+          </Link>
 
           {/* Botões */}
           <View style={styles.buttonContainer}>
@@ -45,14 +44,19 @@ export default function Navbar() {
               >
               <Text style={styles.buttonText}>Novo Post</Text>
             </TouchableOpacity>
+            {/*
             <TouchableOpacity
               style={styles.button}
               onPress={async () => {
                 await AsyncStorage.removeItem('token');
-                /*navigation.navigate('Login');*/
               }}>
               <Text style={styles.buttonText}>Sair</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>*/}
+
+            <Link href="/FormLogin" style={styles.button}>
+              <Text style={styles.buttonText}>Login</Text>
+            </Link>
+
           </View>
         </View>
       </View>
@@ -71,11 +75,10 @@ export default function Navbar() {
           </TouchableOpacity>
 
           {/* Botão de Login */}
-          <TouchableOpacity
-            style={styles.button}
-            /*onPress={() => navigation.navigate('Login')}*/>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
+          <Link href="/login/FormLogin" style={styles.button}>
+              <Text style={styles.buttonText}>Login</Text>
+          </Link>
+          
         </View>
       </View>
     );
@@ -84,43 +87,46 @@ export default function Navbar() {
 
 const styles = StyleSheet.create({
   navbar: {
-    width: '100%',
+    position: "absolute", // Fixa no topo da tela
+    top: 0, // Posiciona no topo
+    width: "100%",
     height: 90,
-    backgroundColor: '#5340C6',
+    backgroundColor: "#5340C6",
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
-    paddingBottom: 8,
+    zIndex: 1000, // Garante que fique sobre outros componentes
+    elevation: 5, // Sombra no Android
   },
   navContent: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#2A2379', // Equivalente ao indigo-950
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#2A2379",
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
     paddingHorizontal: 16,
   },
   logo: {
     fontSize: 24,
-    color: '#FFFFFF',
+    color: "#FFFFFF",
   },
   highlight: {
-    color: '#4C51BF', // Equivalente ao indigo-600
-    fontWeight: 'bold',
+    color: "#4C51BF",
+    fontWeight: "bold",
   },
   buttonContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   button: {
     marginHorizontal: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderRadius: 8,
   },
   buttonText: {
-    color: '#5340C6',
-    fontWeight: 'bold',
+    color: "#5340C6",
+    fontWeight: "bold",
   },
 });
