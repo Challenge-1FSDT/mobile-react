@@ -1,66 +1,104 @@
 import Navbar from "@/components/Navbar";
+import { login } from "@/repository/auth";
+import { getUserInfo } from "@/repository/user";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function LoginForm(): JSX.Element {
   const [userType, setUserType] = useState<"aluno" | "professor">("aluno");
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     console.log({ userType, email, password });
+
+    try {
+      await login(email, password);
+
+      localStorage.setItem('user', JSON.stringify(await getUserInfo()));
+
+      console.log('----------');
+      console.log(localStorage);
+      console.log('----------');
+
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log('----------');
+        console.log('-->Erro<--');
+        console.log(error.message)
+        console.log('----------');
+
+        setError(error.message);
+      } else {
+        console.log('----------');
+        console.log('-->Erro<--');
+        console.log(error)
+        console.log('----------');
+        setError("An unknown error occurred");
+      }
+    }
+
+
   };
 
   return (
     <View style={styles.container}>
       <Navbar></Navbar>
-      <Text style={styles.title}>LOGIN</Text>
+      <View>
+          <Text style={styles.title}>LOGIN</Text>
 
-      {/* User Type Selection */}
-      <View style={styles.radioGroup}>
-        <TouchableOpacity
-          style={[styles.radioOption, userType === "aluno" && styles.radioSelected]}
-          onPress={() => setUserType("aluno")}
-        >
-          <Text style={styles.radioText}>aluno</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.radioOption, userType === "professor" && styles.radioSelected]}
-          onPress={() => setUserType("professor")}
-        >
-          <Text style={styles.radioText}>professor</Text>
-        </TouchableOpacity>
-      </View>
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-      {/* Email Input */}
-      <View style={styles.inputGroup}>
-        <Text style={styles.label}>username</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="your@email.com"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-      </View>
+          {/* User Type Selection */}
+          {/*
+          <View style={styles.radioGroup}>
+            <TouchableOpacity
+              style={[styles.radioOption, userType === "aluno" && styles.radioSelected]}
+              onPress={() => setUserType("aluno")}
+            >
+              <Text style={styles.radioText}>aluno</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.radioOption, userType === "professor" && styles.radioSelected]}
+              onPress={() => setUserType("professor")}
+            >
+              <Text style={styles.radioText}>professor</Text>
+            </TouchableOpacity>
+          </View>
+            */}
+          {/* Email Input */}
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>username</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="your@email.com"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+          </View>
 
-      {/* Password Input */}
-      <View style={styles.inputGroup}>
-        <Text style={styles.label}>password</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="********"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          secureTextEntry
-        />
-      </View>
+          {/* Password Input */}
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>password</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="********"
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              secureTextEntry
+            />
+          </View>
 
-      {/* Login Button */}
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+          {/* Login Button */}
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Entrar</Text>
+          </TouchableOpacity>
+        </View>
+
     </View>
   );
 }
@@ -130,4 +168,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  errorText:{
+    color: "red",
+    textAlign: "center",
+    marginBottom: 16,
+    fontWeight: "bold",
+  }
 });

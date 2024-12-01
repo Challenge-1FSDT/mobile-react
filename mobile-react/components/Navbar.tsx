@@ -23,7 +23,7 @@ export default function Navbar() {
       <View style={styles.navbar}>
         <View style={styles.navContent}>
           {/* Logo */}
-          <Link href="index"
+          <Link href="/"
             >
             <Text style={styles.logo}>
               LEARN<Text style={styles.highlight}>ON</Text>
@@ -44,19 +44,14 @@ export default function Navbar() {
               >
               <Text style={styles.buttonText}>Novo Post</Text>
             </TouchableOpacity>
-            {/*
+            
             <TouchableOpacity
               style={styles.button}
               onPress={async () => {
                 await AsyncStorage.removeItem('token');
               }}>
               <Text style={styles.buttonText}>Sair</Text>
-            </TouchableOpacity>*/}
-
-            <Link href="/FormLogin" style={styles.button}>
-              <Text style={styles.buttonText}>Login</Text>
-            </Link>
-
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -65,14 +60,22 @@ export default function Navbar() {
     return (
       <View style={styles.navbar}>
         <View style={styles.navContent}>
-          {/* Logo */}
+          {/* Logo */}{/*
           <TouchableOpacity 
-          /*onPress={() => navigation.navigate('Home')}*/
+          onPress={() => navigation.navigate('Home')}
           >
             <Text style={styles.logo}>
               LEARN<Text style={styles.highlight}>ON</Text>
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity>*/}
+
+           {/* Logo */}
+           <Link href="/"
+            >
+            <Text style={styles.logo}>
+              LEARN<Text style={styles.highlight}>ON</Text>
+            </Text>
+          </Link>
 
           {/* Botão de Login */}
           <Link href="/login/FormLogin" style={styles.button}>
