@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Link } from "expo-router";
-import { useNavigation } from '@react-navigation/native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Link, router, useRouter } from "expo-router";
 
 export default function Navbar() {  
   const [token, setToken] = useState('');
-  const navigation = useNavigation();
+  const navigate = useRouter();
 
   useEffect(() => {
     const getToken = async () => {
@@ -17,6 +15,12 @@ export default function Navbar() {
 
     getToken();
   }, []);
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('token'); // Remove o token do AsyncStorage
+    //navigate.push('/'); // Redireciona para a tela inicial (ajuste a rota conforme necessário)
+    router.replace('/')
+  }
 
   if (token) {
     return (
@@ -46,10 +50,7 @@ export default function Navbar() {
             </TouchableOpacity>
             
             <TouchableOpacity
-              style={styles.button}
-              onPress={async () => {
-                await AsyncStorage.removeItem('token');
-              }}>
+              style={styles.button} onPress={handleLogout}>
               <Text style={styles.buttonText}>Sair</Text>
             </TouchableOpacity>
           </View>
@@ -60,14 +61,7 @@ export default function Navbar() {
     return (
       <View style={styles.navbar}>
         <View style={styles.navContent}>
-          {/* Logo */}{/*
-          <TouchableOpacity 
-          onPress={() => navigation.navigate('Home')}
-          >
-            <Text style={styles.logo}>
-              LEARN<Text style={styles.highlight}>ON</Text>
-            </Text>
-          </TouchableOpacity>*/}
+          {/* Logo */}
 
            {/* Logo */}
            <Link href="/"
