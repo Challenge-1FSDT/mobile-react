@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet } from 'react-native';
-import PostCard from './PostCard'; // Certifique-se de que PostCard também foi adaptado para React Native
+import PostCard from './PostCard'; // Certifique-se de que PostCard foi adaptado para React Native
+import { Post } from '../types/Post';
 
-export default function Search({ posts, onDelete }) {
+
+interface SearchProps {
+  posts: Post[];
+  onDelete: (id: string) => void; // Adicionando a propriedade onDelete
+}
+
+export default function Search({ posts, onDelete } : SearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredPosts = posts.filter((post) =>
+  // Filtrando as postagens com base no termo de busca
+  const filteredPosts = posts.filter((post : any) =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.content.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -18,11 +26,11 @@ export default function Search({ posts, onDelete }) {
         placeholder="Título ou conteúdo de um post"
         placeholderTextColor="#888"
         value={searchTerm}
-        onChangeText={setSearchTerm}
+        onChangeText={setSearchTerm} // Atualiza o valor da busca
       />
       <FlatList
         data={filteredPosts}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()} // Certifique-se de que o ID é uma string
         renderItem={({ item }) => (
           <View style={styles.listItem}>
             <PostCard

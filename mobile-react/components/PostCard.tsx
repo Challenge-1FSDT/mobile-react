@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import Icon from '@fortawesome/fontawesome-svg-core'; // Usando FontAwesome para ícones
-//import { deletePost } from '../lib/posts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 // Definindo os tipos para as props do componente
 interface PostCardProps {
@@ -65,6 +63,8 @@ export default function PostCard({
   };
 
   const handleReadMore = () => {
+
+    console.log('Teste Maneiro');
     //router.push(`/posts/${id}`);
   };
 
