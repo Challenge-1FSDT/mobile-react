@@ -18,8 +18,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token'); // Remove o token do AsyncStorage
-    //navigate.push('/'); // Redireciona para a tela inicial (ajuste a rota conforme necessário)
-    router.replace('/')
+    router.replace('/');
   }
 
   if (token) {
