@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -22,7 +22,8 @@ export default function PostCard({
   onDelete,
 }: PostCardProps) {
   const [token, setToken] = useState("");
-  const router = useRouter();
+  //const params: { idTeste: string } = useLocalSearchParams();
+  //const { idTeste } = params;
 
   useEffect(() => {
     // Obter token do armazenamento local
@@ -39,9 +40,12 @@ export default function PostCard({
 
   const handleEdit = () => {
     //router.push(`posts/edit/${id}`);
+    console.log('>>> É PARA EDITAR <<<');
+
   };
 
   const handleDelete = async () => {
+    console.log('>>> É PARA deletar <<<');
     Alert.alert(
       "Confirmação",
       "Tem certeza que deseja deletar esse post?",
@@ -63,9 +67,8 @@ export default function PostCard({
   };
 
   const handleReadMore = () => {
-
-    console.log('Teste Maneiro');
-    //router.push(`/posts/${id}`);
+    //console.log('>>> Teste leitura '+id+' <<<');   
+    router.push(`/posts/visualizar/${id}`);
   };
 
   return (
@@ -86,7 +89,9 @@ export default function PostCard({
             </TouchableOpacity>
           </View>
         ) : null}
-        <TouchableOpacity onPress={handleReadMore} style={styles.readMoreButton}>
+        <TouchableOpacity 
+         onPress={handleReadMore}
+         style={styles.readMoreButton}>
           <Text style={styles.readMoreText}>Leia mais</Text>
         </TouchableOpacity>
       </View>

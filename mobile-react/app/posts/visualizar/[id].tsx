@@ -2,17 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Navbar from '../../../components/Navbar';
 import { getPost } from '../../../repository/posts';
+import { useLocalSearchParams } from 'expo-router';
+import { Post } from '@/types/Post';
 
-export default function PostPage({ route }: { route: { params: { id: string } } }) {
-  const [post, setPost] = useState(null);
+export default function PostPage(/*{ route }: { route: { params: { id: string } } }*/) {
+  const [post, setPost] = useState<Post | null>(null);
+  const params: { id: string } = useLocalSearchParams();
+  const { id } = params;
 
   useEffect(() => {
     const fetchPost = async () => {
-      const fetchedPost = await getPost(route.params.id);
+      const fetchedPost = await getPost(id);
       setPost(fetchedPost);
+
     };
     fetchPost();
-  }, [route.params.id]);
+  }, [id]);
 
   if (!post) {
     return <Text>Carregando...</Text>;

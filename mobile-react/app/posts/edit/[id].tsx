@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Para navegação
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Para armazenar o token
-import { updatePost, getPost } from '../../../../repository/posts';
-import { router } from "expo-router";
+import { updatePost, getPost } from '../../../repository/posts';
+import { router, useLocalSearchParams } from "expo-router";
+import Navbar from '@/components/Navbar';
 
-export default function EditPostPage({ route } : any) {
-  const { id } = route.params; // Obtém o id do post da rota
+export default function EditPostPage() {
+
+  const params: { id: string } = useLocalSearchParams();
+  const { id } = params;
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
-  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -44,7 +46,9 @@ export default function EditPostPage({ route } : any) {
   };
 
   return (
+
     <View style={styles.container}>
+      <Navbar></Navbar>
       <Text style={styles.title}>Editar post</Text>
 
       {error && <Text style={styles.error}>{error}</Text>}

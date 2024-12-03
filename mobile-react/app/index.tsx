@@ -19,8 +19,6 @@ export default function Posts() {
 
   const handleDeletePost = (id: string) => {
 
-    console.log('teste');
-
     Alert.alert(
       "Tem certeza que deseja deletar este post?",
       "",

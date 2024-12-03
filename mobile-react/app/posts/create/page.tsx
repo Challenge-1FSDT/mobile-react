@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Alert, TouchableOpacity, TextInput } from 'react-native';
 import Navbar from '../../../components/Navbar';
-import { getPost } from '../../../repository/posts';
 import { router } from "expo-router";
 
 import { createPost } from '../../../repository/posts'; // Certifique-se de que createPost está configurado para React Native
@@ -14,8 +13,6 @@ export default function CreatePostPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
-
-  const navigation = useNavigation();
 
   const handleCreatePost = async () => {
     try {
@@ -37,17 +34,10 @@ export default function CreatePostPage() {
       await createPost(title, content, author, publish);
 
       // Navega para a tela inicial após publicar o post
-      //navigation.navigate("Home"); // Certifique-se de que a rota "Home" existe no seu navigator
       router.replace('/');
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
-      /*
-      } else {
-        setError("An unknown error occurred");
-      }
-      Alert.alert("Erro", error.message || "Ocorreu um erro desconhecido");
-      */
         Alert.alert("Erro", error.message || "Ocorreu um erro desconhecido");
       } else {
         setError("An unknown error occurred");
