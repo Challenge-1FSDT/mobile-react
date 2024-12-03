@@ -37,7 +37,7 @@ export default function Navbar() {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
-              /*onPress={() => navigation.navigate('Home')}*/
+              onPress={() => router.replace('/')}
               >
               <Text style={styles.buttonText}>Home</Text>
             </TouchableOpacity>
