@@ -39,13 +39,20 @@ export default function Navbar() {
               style={styles.button}
               onPress={() => router.replace('/')}
               >
-              <Text style={styles.buttonText}>Home</Text>
+              <Text style={styles.buttonText}>Posts</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
               /*onPress={() => navigation.navigate('CreatePost')}*/
               >
-              <Text style={styles.buttonText}>Novo Post</Text>
+              <Text style={styles.buttonText}>Alunos</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.button}
+              /*onPress={() => navigation.navigate('CreatePost')}*/
+              >
+              <Text style={styles.buttonText}>Professores</Text>
             </TouchableOpacity>
             
             <TouchableOpacity

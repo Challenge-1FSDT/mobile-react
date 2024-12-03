@@ -8,7 +8,7 @@ export default function LoginForm(): JSX.Element {
 
   const handleLogin = () => {
     console.log({ userType, email, password });
-  0,};
+  };
 
   return (
     <View style={styles.container}>

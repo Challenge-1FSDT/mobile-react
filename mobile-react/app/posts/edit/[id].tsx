@@ -29,12 +29,13 @@ export default function EditPostPage() {
   }, [id]);
 
   const handleUpdatePost = async () => {
+    console.log(' >>> Salvar atualização <<<');
     try {
       const token = await AsyncStorage.getItem("token"); // Obtém o token do AsyncStorage
       if (token) {
         await updatePost(id, { title, content });
         Alert.alert("Sucesso", "Post atualizado com sucesso", [
-          { text: "OK", onPress: () => router.navigate('/') }, // Navega para a tela inicial
+          { text: "OK", onPress: () => router.replace('/') }, // Navega para a tela inicial
         ]);
       } else {
         throw new Error("Token not found");
@@ -46,35 +47,37 @@ export default function EditPostPage() {
   };
 
   return (
+    <View>
+     <Navbar></Navbar>
+      <View style={styles.container}>
+        
+        <Text style={styles.title}>Editar post</Text>
 
-    <View style={styles.container}>
-      <Navbar></Navbar>
-      <Text style={styles.title}>Editar post</Text>
+        {error && <Text style={styles.error}>{error}</Text>}
 
-      {error && <Text style={styles.error}>{error}</Text>}
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Título</Text>
+          <TextInput
+            style={styles.input}
+            value={title}
+            onChangeText={setTitle}
+            placeholder="Título"
+          />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Título</Text>
-        <TextInput
-          style={styles.input}
-          value={title}
-          onChangeText={setTitle}
-          placeholder="Título"
-        />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Conteúdo</Text>
+          <TextInput
+            style={[styles.input, styles.textArea]}
+            value={content}
+            onChangeText={setContent}
+            placeholder="Conteúdo"
+            multiline
+          />
+        </View>
+
+        <Button title="Publicar atualização" onPress={handleUpdatePost} color="#5340C6" />
       </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Conteúdo</Text>
-        <TextInput
-          style={[styles.input, styles.textArea]}
-          value={content}
-          onChangeText={setContent}
-          placeholder="Conteúdo"
-          multiline
-        />
-      </View>
-
-      <Button title="Publicar atualização" onPress={handleUpdatePost} color="#5340C6" />
     </View>
   );
 }

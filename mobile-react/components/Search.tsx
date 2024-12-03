@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import PostCard from './PostCard'; // Certifique-se de que PostCard foi adaptado para React Native
 import { Post } from '../types/Post';
+import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 interface SearchProps {
@@ -11,6 +13,21 @@ interface SearchProps {
 
 export default function Search({ posts, onDelete } : SearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    // Obter token do armazenamento local
+    const fetchToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        setToken(token || "");
+      } catch (error) {
+        console.error("Erro ao obter token:", error);
+      }
+    };
+    fetchToken();
+  }, []);
+
 
   // Filtrando as postagens com base no termo de busca
   const filteredPosts = posts.filter((post : any) =>
@@ -21,13 +38,25 @@ export default function Search({ posts, onDelete } : SearchProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Buscar postagens</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Título ou conteúdo de um post"
-        placeholderTextColor="#888"
-        value={searchTerm}
-        onChangeText={setSearchTerm} // Atualiza o valor da busca
-      />
+      <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Título ou conteúdo de um post"
+            placeholderTextColor="#888"
+            value={searchTerm}
+            onChangeText={setSearchTerm} // Atualiza o valor da busca
+          />
+          {token ? (
+              <TouchableOpacity
+                style={styles.readMoreButton}
+                onPress={() => router.replace('/posts/create/page')}
+                >
+                <Text style={styles.readMoreText}>Novo Post</Text>
+
+              </TouchableOpacity>
+              ): null
+          }
+      </View>
       <FlatList
         data={filteredPosts}
         keyExtractor={(item) => item.id.toString()} // Certifique-se de que o ID é uma string
@@ -72,7 +101,21 @@ const styles = StyleSheet.create({
   list: {
     paddingHorizontal: 8,
   },
+  inputContainer: {
+    flexDirection: 'row', // Coloca os elementos em linha (horizontal)
+    justifyContent: 'space-between', // Espaça entre os componentes
+    alignItems: 'center', // Alinha os itens verticalmente no centro
+  },
   listItem: {
     marginBottom: 8,
+  },readMoreButton: {
+    backgroundColor: "#5340C6",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  readMoreText: {
+    color: "#FFF",
+    fontSize: 14,
   },
 });

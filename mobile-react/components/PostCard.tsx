@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { deletePost } from '@/repository/posts';
+import Toast from 'react-native-toast-message';
 
 // Definindo os tipos para as props do componente
 interface PostCardProps {
@@ -39,13 +41,13 @@ export default function PostCard({
   }, []);
 
   const handleEdit = () => {
-    //router.push(`posts/edit/${id}`);
     console.log('>>> É PARA EDITAR <<<');
-
+    router.push(`/posts/edit/${id}`);
   };
 
   const handleDelete = async () => {
     console.log('>>> É PARA deletar <<<');
+
     Alert.alert(
       "Confirmação",
       "Tem certeza que deseja deletar esse post?",
@@ -57,8 +59,8 @@ export default function PostCard({
         {
           text: "Confirmar",
           onPress: async () => {
-            //await deletePost(id);
-            //onDelete(id);
+            await deletePost(id);
+            onDelete(id);
             Alert.alert("Sucesso", "Post deletado com sucesso!");
           },
         },
@@ -67,7 +69,6 @@ export default function PostCard({
   };
 
   const handleReadMore = () => {
-    //console.log('>>> Teste leitura '+id+' <<<');   
     router.push(`/posts/visualizar/${id}`);
   };
 
