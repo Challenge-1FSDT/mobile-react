@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, Alert } from "react-native";
-import Search from "../components/Search";  // Certifique-se de que este componente está adaptado para React Native
+import Search from "../components/SearchPost";  // Certifique-se de que este componente está adaptado para React Native
 import { getPosts } from "../repository/posts";  // Função para pegar os posts (assumindo que você tem essa função adaptada para React Native)
 import { Post } from "../types/Post";  // Tipagem de Post (se você estiver usando TypeScript)
 import Navbar from "@/components/Navbar";
