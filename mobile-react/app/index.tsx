@@ -38,7 +38,6 @@ export default function Posts() {
   return (
     <View style={styles.container}>
       <Navbar></Navbar>
-      <Text style={styles.heading}>Posts</Text>
       <Search posts={posts} onDelete={handleDeletePost} />
     </View>
   );

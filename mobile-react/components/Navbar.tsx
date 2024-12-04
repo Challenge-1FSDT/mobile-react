@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Link, router, useRouter } from "expo-router";
+import { Link, router } from "expo-router";
 
 export default function Navbar() {  
   const [token, setToken] = useState('');
-  const navigate = useRouter();
 
   useEffect(() => {
     const getToken = async () => {
@@ -33,33 +32,35 @@ export default function Navbar() {
             </Text>
           </Link>
 
-          {/* Botões */}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => router.replace('/')}
-              >
-              <Text style={styles.buttonText}>Posts</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              /*onPress={() => navigation.navigate('CreatePost')}*/
-              >
-              <Text style={styles.buttonText}>Alunos</Text>
-            </TouchableOpacity>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {/* Botões */}
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => router.replace('/')}
+                >
+                <Text style={styles.buttonText}>Posts</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} >
+                <Text style={styles.buttonText}>Alunos</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.button}
-              /*onPress={() => navigation.navigate('CreatePost')}*/
-              >
-              <Text style={styles.buttonText}>Professores</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              style={styles.button} onPress={handleLogout}>
-              <Text style={styles.buttonText}>Sair</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity
+                style={styles.button}
+                /*onPress={() => navigation.navigate('CreatePost')}*/
+                >
+                <Text style={styles.buttonText}>Professores</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={styles.button} onPress={handleLogout}>
+                <Text style={styles.buttonText}>Sair</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+
+
+
         </View>
       </View>
     );
@@ -70,8 +71,7 @@ export default function Navbar() {
           {/* Logo */}
 
            {/* Logo */}
-           <Link href="/"
-            >
+           <Link href="/">
             <Text style={styles.logo}>
               LEARN<Text style={styles.highlight}>ON</Text>
             </Text>
@@ -88,53 +88,6 @@ export default function Navbar() {
   }
 }
 
-/*
-const styles = StyleSheet.create({
-  navbar: {
-    position: "absolute", // Fixa no topo da tela
-    top: 0, // Posiciona no topo
-    width: "100%",
-    height: 90,
-    backgroundColor: "#5340C6",
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
-    zIndex: 1000, // Garante que fique sobre outros componentes
-    elevation: 5, // Sombra no Android
-  },
-  navContent: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#2A2379",
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
-    paddingHorizontal: 16,
-  },
-  logo: {
-    fontSize: 24,
-    color: "#FFFFFF",
-  },
-  highlight: {
-    color: "#4C51BF",
-    fontWeight: "bold",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-  },
-  button: {
-    marginHorizontal: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 8,
-  },
-  buttonText: {
-    color: "#5340C6",
-    fontWeight: "bold",
-  },
-});
-*/
 const styles = StyleSheet.create({
   navbar: {
     width: "100%",

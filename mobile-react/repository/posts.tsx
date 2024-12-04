@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Post, PostForm } from '../types/Post';
 
 export async function getPosts(): Promise<Post[]> {
@@ -23,11 +24,12 @@ export async function getPost(id: string): Promise<Post> {
 }
 
 export async function createPost(title: string, content: string, author: string, publish: boolean): Promise<void> {
+  const token = await AsyncStorage.getItem('token'); // Obtém o token do AsyncStorage
   await fetch('https://api.capoteimeu.uno/posts', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      'Authorization': `Bearer ${token}`, // Usa o token no cabeçalho
     },
     body: JSON.stringify({ title, content, author, publish }),
   });
@@ -36,20 +38,23 @@ export async function createPost(title: string, content: string, author: string,
 
 
 export async function deletePost(id: string): Promise<void> {
+  const token = await AsyncStorage.getItem('token'); // Obtém o token do AsyncStorage
   await fetch(`https://api.capoteimeu.uno/posts/${id}`, {
     method: 'DELETE',
     headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      'Authorization': `Bearer ${token}`, // Usa o token no cabeçalho
     },
   });
 }
 
+
 export async function updatePost(id: string, post: PostForm): Promise<void> {
+  const token = await AsyncStorage.getItem('token'); // Obtém o token do AsyncStorage
   await fetch(`https://api.capoteimeu.uno/posts/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      'Authorization': `Bearer ${token}`, // Usa o token no cabeçalho
     },
     body: JSON.stringify(post),
   });

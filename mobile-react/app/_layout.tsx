@@ -4,9 +4,9 @@ import { Stack, Tabs } from  "expo-router";
 export default function RootLayout(){
     return (
         <Stack screenOptions={{ headerShown: false }}> 
-            <Stack.Screen name="index" />
-            <Stack.Screen name="userNomeComposto" options={{headerTitle: "User"}}/>
-            <Stack.Screen name="usuario/[usuarioId]"/>
+            <Tabs.Screen name="index" />
+            <Tabs.Screen name="posts" />
+            <Tabs.Screen name="alunos" />
         </Stack>
     );
 }

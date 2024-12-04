@@ -47,9 +47,14 @@ export default function PostPage(/*{ route }: { route: { params: { id: string } 
 }
 
 const styles = StyleSheet.create({
-  container: {
+  /*container: {
     flex: 1,
     backgroundColor: '#fff',
+  },*/
+  container: {
+    flexGrow: 1,  // Permite que o ScrollView expanda
+    backgroundColor: '#fff',
+    paddingBottom: 16,  // Ajusta para evitar corte de conteúdo na parte inferior
   },
   content: {
     padding: 16,
