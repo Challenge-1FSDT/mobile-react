@@ -16,13 +16,15 @@ export default function LoginForm(): JSX.Element {
     console.log({ userType, email, password });
 
     try {
-      await login(email, password);
-
+      const teste = await login(email, password);
+      console.log(teste);
       //localStorage.setItem('user', JSON.stringify(await getUserInfo()));
-      await AsyncStorage.setItem('user', JSON.stringify(await getUserInfo()));
+      const userData = await AsyncStorage.setItem('user', JSON.stringify(await getUserInfo()));
 
+      console.log('--------------------------------------------------');
       console.log('----------');
-      console.log(localStorage);
+      console.log('teste do local');
+      console.log(userData);
       console.log('----------');
 
     } catch (error) {
