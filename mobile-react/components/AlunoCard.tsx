@@ -9,18 +9,21 @@ import Toast from 'react-native-toast-message';
 // Definindo os tipos para as props do componente
 interface PostCardProps {
   id: string;
-  title: string;
-  description: string;
-  author: string;
+  name: string;
+  email: string;
+  password: string;
+  role: string;
   onDelete: (id: string) => void;
 }
 
 
 export default function PostCard({
+
   id,
-  title,
-  description,
-  author,
+  name,
+  email,
+  password,
+  role,
   onDelete,
 }: PostCardProps) {
   const [token, setToken] = useState("");
@@ -75,10 +78,12 @@ export default function PostCard({
   return (
     <View style={styles.card}>
       <View style={styles.header}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title}>{name}</Text>
       </View>
-      <Text style={styles.author}>Autor: {author}</Text>
-      <Text style={styles.description}>{description}</Text>
+      <Text style={styles.author}>Nome: {name}</Text>
+      <Text style={styles.description}>{email}</Text>
+      <Text style={styles.description}>{password}</Text>
+      <Text style={styles.description}>{role}</Text>
       <View style={styles.actions}>
         {token ? (
           <View style={styles.editDeleteContainer}>

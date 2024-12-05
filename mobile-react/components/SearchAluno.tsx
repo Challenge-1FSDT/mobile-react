@@ -4,14 +4,15 @@ import AlunoCard from './AlunoCard'; // Certifique-se de que PostCard foi adapta
 import { Post } from '../types/Post';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Aluno } from '@/types/Aluno';
 
 
 interface SearchProps {
-  posts: Post[];
+  posts: Aluno[];
   onDelete: (id: string) => void; // Adicionando a propriedade onDelete
 }
 
-export default function Search({ posts, onDelete } : SearchProps) {
+export default function SearchAluno({ posts, onDelete } : SearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [token, setToken] = useState("");
 
@@ -37,11 +38,11 @@ export default function Search({ posts, onDelete } : SearchProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Buscar postagens</Text>
+      <Text style={styles.heading}>Buscar Aluno</Text>
       <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Título ou conteúdo de um post"
+            placeholder="Informação do Aluno"
             placeholderTextColor="#888"
             value={searchTerm}
             onChangeText={setSearchTerm} // Atualiza o valor da busca
@@ -49,9 +50,9 @@ export default function Search({ posts, onDelete } : SearchProps) {
           {token ? (
               <TouchableOpacity
                 style={styles.readMoreButton}
-                onPress={() => router.replace('/posts/create/page')}
+                onPress={() => router.replace('/aluno/create/page')}
                 >
-                <Text style={styles.readMoreText}>Novo Post</Text>
+                <Text style={styles.readMoreText}>Novo Aluno</Text>
 
               </TouchableOpacity>
               ): null
