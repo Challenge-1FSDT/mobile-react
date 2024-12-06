@@ -32,6 +32,14 @@ import base64 from "react-native-base64";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export async function login(email: string, password: string): Promise<void> {
+
+  console.log('-----------------------');
+
+  console.log(' >> Email: '+email);
+  console.log(' >> Password: '+password);
+
+  console.log('-----------------------');
+
   const encodedHeader = base64.encode(`${email}:${password}`);
 
   const response = await fetch("https://api.capoteimeu.uno/auth/login", {
@@ -44,11 +52,17 @@ export async function login(email: string, password: string): Promise<void> {
 
   const data = await response.text();
 
+  console.log('-----------------');
+  console.log('>>> auth: ' + data);
+  console.log('-----------------');
+
   if (response.ok) {
     try {
+
       // Armazena o token no AsyncStorage
-      const teste = await AsyncStorage.setItem("token", data);
-      console.log('token guardado: ' + data)
+      await AsyncStorage.setItem("token", data);
+      console.log('token guardado: ' + data);
+      console.log('-----------------');
     } catch (error) {
       //throw new Error("Erro ao salvar o token: " + error.message);
       if (error instanceof Error) {

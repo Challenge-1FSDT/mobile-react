@@ -43,14 +43,14 @@ export default function Navbar() {
               </TouchableOpacity>
               
               <TouchableOpacity style={styles.button} 
-                onPress={() => router.replace('./aluno/Alunos')}
+                onPress={() => router.replace('/aluno/Alunos')}
                 >
                 <Text style={styles.buttonText}>Alunos</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => router.navigate('/aluno/Posts')}
+                onPress={() => router.navigate('/aluno/Professor')}
                 >
                 <Text style={styles.buttonText}>Professores</Text>
               </TouchableOpacity>

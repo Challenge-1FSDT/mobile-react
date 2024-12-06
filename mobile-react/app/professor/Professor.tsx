@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, Alert } from "react-native";
 import Search from "../../components/SearchAluno";
-import { getUsuarios } from "../../repository/alunos";
+import { getAlunos } from "../../repository/alunos";
 import { Usuario } from "../../types/Usuario";
 import SearchAluno from "../../components/SearchAluno";
 import Navbar from "@/components/Navbar";
 
-export default function Alunos() {
+export default function Professor() {
   const [alunos, setAluno] = useState<Usuario[]>([]);
   
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getUsuarios('user');
-
-      console.log('>>> data >>> ' + data);
-
+      const data = await getAlunos('user');
       setAluno(Array.isArray(data) ? data : []);
     };
 

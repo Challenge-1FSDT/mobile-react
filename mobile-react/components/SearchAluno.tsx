@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import AlunoCard from './AlunoCard'; // Certifique-se de que PostCard foi adaptado para React Native
-import { Post } from '../types/Post';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Aluno } from '@/types/Aluno';
+import { Aluno } from '@/types/Usuario';
 
 
 interface SearchProps {
-  posts: Aluno[];
+  alunos: Aluno[];
   onDelete: (id: string) => void; // Adicionando a propriedade onDelete
 }
 
-export default function SearchAluno({ posts, onDelete } : SearchProps) {
+export default function SearchAluno({ alunos, onDelete } : SearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [token, setToken] = useState("");
 
@@ -26,12 +25,13 @@ export default function SearchAluno({ posts, onDelete } : SearchProps) {
         console.error("Erro ao obter token:", error);
       }
     };
+    console.log('Alunos >> ' + alunos);
     fetchToken();
   }, []);
 
-
+  
   // Filtrando as postagens com base no termo de busca
-  const filteredAlunos = posts.filter((post : any) =>
+  const filteredAlunos = alunos.filter((post : any) =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.content.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -65,9 +65,10 @@ export default function SearchAluno({ posts, onDelete } : SearchProps) {
           <View style={styles.listItem}>
             <AlunoCard
               id={item.id}
-              title={item.title}
-              description={item.content}
-              author={item.author}
+              name={item.name}
+              email={item.email}
+              password={item.password}
+              role={item.role}
               onDelete={onDelete}
             />
           </View>

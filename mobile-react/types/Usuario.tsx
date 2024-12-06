@@ -1,4 +1,4 @@
-export type Aluno = {
+export type Usuario = {
   id: string;
   name: string;
   email: string;
@@ -6,7 +6,7 @@ export type Aluno = {
   role: string;
 };
 
-export type PostForm = {
+export type UsuarioForm = {
   name: string;
   email: string;
   password: string;

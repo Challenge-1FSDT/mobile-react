@@ -2,11 +2,12 @@ import Navbar from "@/components/Navbar";
 import { login } from "@/repository/auth";
 import { getUserInfo } from "@/repository/user";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function LoginForm(): JSX.Element {
-  const [userType, setUserType] = useState<"aluno" | "professor">("aluno");
+  const [userType, setUserType] = useState<"user" | "admin">("user");
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,16 +17,22 @@ export default function LoginForm(): JSX.Element {
     console.log({ userType, email, password });
 
     try {
-      const teste = await login(email, password);
-      console.log(teste);
-      //localStorage.setItem('user', JSON.stringify(await getUserInfo()));
-      const userData = await AsyncStorage.setItem('user', JSON.stringify(await getUserInfo()));
+      await login(email, password);
+      const teste = AsyncStorage.getItem("token");
+
+      console.log('Resposta de Login: '+teste);
+
+      await AsyncStorage.setItem('user', JSON.stringify(await getUserInfo()));
+
+      let userData = await AsyncStorage.getItem('user');
 
       console.log('--------------------------------------------------');
       console.log('----------');
       console.log('teste do local');
       console.log(userData);
       console.log('----------');
+
+      router.replace('/');
 
     } catch (error) {
       if (error instanceof Error) {
@@ -57,22 +64,22 @@ export default function LoginForm(): JSX.Element {
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
             {/* User Type Selection */}
-            {/*
+            
             <View style={styles.radioGroup}>
               <TouchableOpacity
-                style={[styles.radioOption, userType === "aluno" && styles.radioSelected]}
-                onPress={() => setUserType("aluno")}
+                style={[styles.radioOption, userType === "user" && styles.radioSelected]}
+                onPress={() => setUserType("user")}
               >
-                <Text style={styles.radioText}>aluno</Text>
+                <Text style={styles.radioText}>Aluno</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.radioOption, userType === "professor" && styles.radioSelected]}
-                onPress={() => setUserType("professor")}
+                style={[styles.radioOption, userType === "admin" && styles.radioSelected]}
+                onPress={() => setUserType("admin")}
               >
-                <Text style={styles.radioText}>professor</Text>
+                <Text style={styles.radioText}>Professor</Text>
               </TouchableOpacity>
             </View>
-              */}
+              
             {/* Email Input */}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>username</Text>
@@ -233,6 +240,27 @@ const styles = StyleSheet.create({
     color: "red",
     textAlign: "center",
     marginBottom: 16,
+    fontWeight: "bold",
+  },
+  radioGroup: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 20,
+  },
+  radioOption: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    backgroundColor: "#FAF5FF", // Purple-100
+    borderWidth: 1,
+    borderColor: "#D6BCFA", // Purple-300
+  },
+  radioSelected: {
+    backgroundColor: "#6B46C1", // Purple-800
+    borderColor: "#4C51BF", // Purple-600
+  },
+  radioText: {
+    color: "#6B46C1", // Purple-800
     fontWeight: "bold",
   }
 });
