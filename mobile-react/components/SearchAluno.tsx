@@ -50,10 +50,10 @@ export default function SearchAluno({ alunos, onDelete } : SearchProps) {
           />
           {token ? (
 
-              /*onPress={() => router.replace('/a')}*/
+              /**/
               <TouchableOpacity
                 style={styles.readMoreButton}
-                >
+                onPress={() => router.replace('/aluno/create/page')}>
                 <Text style={styles.readMoreText}>Novo Aluno</Text>
 
               </TouchableOpacity>

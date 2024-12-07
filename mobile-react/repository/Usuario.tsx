@@ -59,4 +59,15 @@ export async function searchUsuario(query: string): Promise<Usuario[]> {
   return data;
 }
 
+export async function createUsuario(title: string, content: string, author: string, publish: boolean): Promise<void> {
+  const token = await AsyncStorage.getItem('token'); // Obtém o token do AsyncStorage
+  await fetch('https://api.capoteimeu.uno/posts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`, // Usa o token no cabeçalho
+    },
+    body: JSON.stringify({ title, content, author, publish }),
+  });
+}
 
