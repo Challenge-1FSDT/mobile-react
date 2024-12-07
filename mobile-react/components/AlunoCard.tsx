@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { deletePost } from '@/repository/posts';
+import { deleteUsuario } from '@/repository/Usuario';
 import Toast from 'react-native-toast-message';
 
 // Definindo os tipos para as props do componente
@@ -53,7 +53,7 @@ export default function PostCard({
 
     Alert.alert(
       "Confirmação",
-      "Tem certeza que deseja deletar esse post?",
+      "Tem certeza que deseja deletar este usuario?",
       [
         {
           text: "Cancelar",
@@ -62,17 +62,13 @@ export default function PostCard({
         {
           text: "Confirmar",
           onPress: async () => {
-            await deletePost(id);
+            await deleteUsuario(id);
             onDelete(id);
-            Alert.alert("Sucesso", "Post deletado com sucesso!");
+            Alert.alert("Sucesso", "Usuario deletado com sucesso!");
           },
         },
       ]
     );
-  };
-
-  const handleReadMore = () => {
-    router.push(`/posts/visualizar/${id}`);
   };
 
   return (

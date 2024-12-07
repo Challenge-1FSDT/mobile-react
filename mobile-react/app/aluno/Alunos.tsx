@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, Alert } from "react-native";
 import Search from "../../components/SearchAluno";
-import { getUsuarios } from "../../repository/alunos";
+import { getUsuarios } from "../../repository/Usuario";
 import { Usuario } from "../../types/Usuario";
 import SearchAluno from "../../components/SearchAluno";
 import Navbar from "@/components/Navbar";
