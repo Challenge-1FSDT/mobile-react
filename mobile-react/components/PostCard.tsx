@@ -78,7 +78,7 @@ export default function PostCard({
         <Text style={styles.title}>{title}</Text>
       </View>
       <Text style={styles.author}>Autor: {author}</Text>
-      <Text style={styles.description}>{description}</Text>
+      <Text style={styles.description} numberOfLines={5}>{description}</Text>
       <View style={styles.actions}>
         {token ? (
           <View style={styles.editDeleteContainer}>

@@ -4,8 +4,8 @@ import { Usuario } from '../types/Usuario';
 export async function getUsuarios(perfil : string): Promise<Usuario[]> {
   try {
     const token = await AsyncStorage.getItem('token');
-    console.log('Token >> '+token+'<< Token');
-    const response = await fetch(`https://api.capoteimeu.uno/users?user=${perfil}`,
+    console.log('Token >> '+token+' << Token');
+    const response = await fetch(`https://api.capoteimeu.uno/users?role=${perfil}`,
       {
         method: 'GET',
         headers: {
@@ -22,14 +22,8 @@ export async function getUsuarios(perfil : string): Promise<Usuario[]> {
     console.log('Resposta recebida (JSON):', JSON.stringify(jsonResponse, null, 2));
 
     // Retorna os dados (ou um array vazio, se não existir a propriedade 'data')
-    return jsonResponse.data || [];
-    /*
-    console.log('Teste de response >> ' + response.toString());
+    return jsonResponse[0] || [];
 
-    const alunos = await response.json();
-    console.log('Resposta nova >> ' + alunos);
-    return alunos.data;
-    */
   } catch (error) {
     console.error("Erro ao buscar alunos:", error); 
     return [];

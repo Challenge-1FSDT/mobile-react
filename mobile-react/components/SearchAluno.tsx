@@ -3,11 +3,11 @@ import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'r
 import AlunoCard from './AlunoCard'; // Certifique-se de que PostCard foi adaptado para React Native
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Aluno } from '@/types/Usuario';
+import { Usuario } from '@/types/Usuario';
 
 
 interface SearchProps {
-  alunos: Aluno[];
+  alunos: Usuario[];
   onDelete: (id: string) => void; // Adicionando a propriedade onDelete
 }
 
@@ -25,15 +25,16 @@ export default function SearchAluno({ alunos, onDelete } : SearchProps) {
         console.error("Erro ao obter token:", error);
       }
     };
-    console.log('Alunos >> ' + alunos);
+    console.log('Usuario >> ' + alunos);
     fetchToken();
   }, []);
 
   
   // Filtrando as postagens com base no termo de busca
-  const filteredAlunos = alunos.filter((post : any) =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.content.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredAlunos = alunos.filter((aluno : any) =>
+    aluno.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    aluno.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    aluno.password.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -48,9 +49,10 @@ export default function SearchAluno({ alunos, onDelete } : SearchProps) {
             onChangeText={setSearchTerm} // Atualiza o valor da busca
           />
           {token ? (
+
+              /*onPress={() => router.replace('/a')}*/
               <TouchableOpacity
                 style={styles.readMoreButton}
-                onPress={() => router.replace('/aluno/create/page')}
                 >
                 <Text style={styles.readMoreText}>Novo Aluno</Text>
 

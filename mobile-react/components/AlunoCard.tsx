@@ -81,9 +81,7 @@ export default function PostCard({
         <Text style={styles.title}>{name}</Text>
       </View>
       <Text style={styles.author}>Nome: {name}</Text>
-      <Text style={styles.description}>{email}</Text>
-      <Text style={styles.description}>{password}</Text>
-      <Text style={styles.description}>{role}</Text>
+      <Text style={styles.author}>E-mail: {email}</Text>
       <View style={styles.actions}>
         {token ? (
           <View style={styles.editDeleteContainer}>
