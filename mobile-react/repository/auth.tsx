@@ -46,3 +46,8 @@ export async function login(email: string, password: string): Promise<void> {
     throw new Error("Credenciais inválidas. Tente novamente.");
   }
 }
+
+
+export async function verificaToken(token: string){
+  
+}

@@ -10,44 +10,45 @@ import { extractUserName } from '@/repository/user';
 
 
 export default function CreatePostPage() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
 
   const handleCreateAlunos = async () => {
-    try {
-      const user = await AsyncStorage.getItem("user");
+   
       const token = await AsyncStorage.getItem("token");
 
       if (token) {
         const author = extractUserName(token); // Ajuste conforme necessário
         console.log(author);
       } else {
-        throw new Error("Token not found");
+        Alert.alert('Sessão do Usuário está expirada, você será redirecionado para tela de login.');
+        router.replace('/');
       }
 
-      console.log(user);
-
-      await createPost(title, content);
-
-      // Navega para a tela inicial após publicar o post
-      router.replace('/');
+    try {
+      const response = await createUsuario(nome, email, senha, 'user');
+      console.log(' >>> response >>> ' + response);
+      Alert.alert('Sucesso', 'Usuário criado com sucesso!');
+      // Navega para a tela inicial após criar o usuário
+      // router.replace('/aluno/Alunos');
     } catch (error) {
       if (error instanceof Error) {
-        setError(error.message);
-        Alert.alert("Erro", error.message || "Ocorreu um erro desconhecido");
+        setError(error.message); // Atualiza o estado do erro, se necessário
+        Alert.alert('Erro', error.message); // Exibe a mensagem de erro
       } else {
-        setError("An unknown error occurred");
-        Alert.alert("Erro", "Ocorreu um erro desconhecido");
+        setError('Ocorreu um erro desconhecido.');
+        Alert.alert('Erro', 'Ocorreu um erro desconhecido.');
       }
-
     }
+
   };
 
   return (
     <View style={styles.container}>
       <Navbar />
-      <Text style={styles.title}>Criar post</Text>
+      <Text style={styles.title}>Adicionar Novo Aluno</Text>
       
       {error && (
         <TouchableOpacity onPress={() => router.replace('/login/FormLogin')}>
@@ -59,29 +60,39 @@ export default function CreatePostPage() {
 
       <View style={styles.form}>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Título</Text>
+          <Text style={styles.label}>Nome</Text>
           <TextInput
             style={styles.input}
-            value={title}
-            onChangeText={setTitle}
-            placeholder="Título"
+            value={nome}
+            onChangeText={setNome}
+            placeholder="Nome"
           />
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Conteúdo</Text>
+          <Text style={styles.label}>E-mail</Text>
           <TextInput
-            style={[styles.input, styles.textArea]}
-            value={content}
-            onChangeText={setContent}
-            placeholder="Conteúdo"
-            multiline
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            placeholder="E-mail"
           />
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleCreatePost}>
-          <Text style={styles.buttonText}>Publicar</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Senha</Text>
+          <TextInput
+            style={styles.input}
+            value={senha}
+            onChangeText={setSenha}
+            placeholder="Senha"
+          />
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={handleCreateAlunos}>
+          <Text style={styles.buttonText}>Salvar</Text>
         </TouchableOpacity>
+
       </View>
     </View>
   );
@@ -147,4 +158,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  radioGroup: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 20,
+  },
+  radioOption: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    backgroundColor: "#FAF5FF", // Purple-100
+    borderWidth: 1,
+    borderColor: "#D6BCFA", // Purple-300
+  },
+  radioSelected: {
+    backgroundColor: "#6B46C1", // Purple-800
+    borderColor: "#4C51BF", // Purple-600
+  },
+  radioText: {
+    color: "#6B46C1", // Purple-800
+    fontWeight: "bold",
+  }
 });

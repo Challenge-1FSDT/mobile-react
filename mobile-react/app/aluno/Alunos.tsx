@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Alert } from "react-native";
-import Search from "../../components/SearchAluno";
+import { View, StyleSheet, Alert } from "react-native";
 import { getUsuarios } from "../../repository/Usuario";
 import { Usuario } from "../../types/Usuario";
 import SearchAluno from "../../components/SearchAluno";
