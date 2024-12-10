@@ -51,7 +51,7 @@ export default function Search({ professores, onDelete } : SearchProps) {
           {token ? (
               <TouchableOpacity
                 style={styles.readMoreButton}
-                onPress={() => router.replace('/posts/create/page')}
+                onPress={() => router.replace('/professor/create/page')}
                 >
                 <Text style={styles.readMoreText}>Novo Professor</Text>
 
