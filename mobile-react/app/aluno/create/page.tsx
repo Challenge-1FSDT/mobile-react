@@ -32,7 +32,7 @@ export default function CreatePostPage() {
       console.log(' >>> response >>> ' + response);
       Alert.alert('Sucesso', 'Usuário criado com sucesso!');
       // Navega para a tela inicial após criar o usuário
-      // router.replace('/aluno/Alunos');
+      router.replace('/aluno/Alunos');
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message); // Atualiza o estado do erro, se necessário

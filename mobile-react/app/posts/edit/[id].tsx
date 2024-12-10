@@ -32,14 +32,14 @@ export default function EditPostPage() {
       const token = await AsyncStorage.getItem("token"); // Obtém o token do AsyncStorage
       if (token) {
         await updatePost(id, { title, content });
-        Alert.alert("Sucesso", "Post atualizado com sucesso", [
+        Alert.alert("Sucesso", "Informações do aluno atualizado com sucesso", [
           { text: "OK", onPress: () => router.replace('/') }, // Navega para a tela inicial
         ]);
       } else {
         throw new Error("Token not found");
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : "An unknown error occurred");
+      setError(error instanceof Error ? error.message : "Ocorreu um erro");
       Alert.alert("Erro", error instanceof Error ? error.message : "Ocorreu um erro desconhecido");
     }
   };
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#5340C6',
+    color: '#4C6EF5',
     marginBottom: 20,
   },
   error: {
@@ -108,11 +108,11 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#5340C6',
+    color: '#4C6EF5',
   },
   input: {
     height: 40,
-    borderColor: '#5340C6',
+    borderColor: '#4C6EF5',
     borderWidth: 1,
     borderRadius: 8,
     paddingLeft: 10,
