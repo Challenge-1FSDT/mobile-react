@@ -10,10 +10,11 @@ import UsuarioCard from './UsuarioCard';
 
 interface SearchProps {
   professores: Usuario[];
-  onDelete: (id: string) => void; // Adicionando a propriedade onDelete
+  //onDelete: (id: string) => void; // Adicionando a propriedade onDelete
+  onAlterar: string;
 }
 
-export default function Search({ professores, onDelete } : SearchProps) {
+export default function Search({ professores, onAlterar } : SearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [token, setToken] = useState("");
 
@@ -43,7 +44,7 @@ export default function Search({ professores, onDelete } : SearchProps) {
       <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Nome ou E-mail do professor"
+            placeholder="Nome ou"
             placeholderTextColor="#888"
             value={searchTerm}
             onChangeText={setSearchTerm} // Atualiza o valor da busca
@@ -51,7 +52,7 @@ export default function Search({ professores, onDelete } : SearchProps) {
           {token ? (
               <TouchableOpacity
                 style={styles.readMoreButton}
-                onPress={() => router.replace('/professor/create/page')}
+                onPress={() => router.replace(`/${onAlterar}/create/page`)}
                 >
                 <Text style={styles.readMoreText}>Novo Professor</Text>
 
@@ -70,7 +71,7 @@ export default function Search({ professores, onDelete } : SearchProps) {
               email={item.email}
               password={item.password}
               role={item.role}
-              onDelete={onDelete}
+              onAlterar={onAlterar}
             />
           </View>
         )}

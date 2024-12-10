@@ -13,7 +13,7 @@ interface AlunoCardProps {
   email: string;
   password: string;
   role: string;
-  onDelete: (id: string) => void;
+  onAlterar: string;
 }
 
 
@@ -23,7 +23,7 @@ export default function UsuarioCard({
   email,
   password,
   role,
-  onDelete,
+  onAlterar,
 }: AlunoCardProps) {
   const [token, setToken] = useState("");
 
@@ -42,7 +42,7 @@ export default function UsuarioCard({
 
   const handleEdit = () => {
     console.log(`>>> É PARA EDITAR: ${id} <<<`);
-    router.push(`/aluno/edit/${id}`);
+    router.push(`/${onAlterar}/edit/${id}`);
 
   };
 
@@ -61,7 +61,6 @@ export default function UsuarioCard({
           text: "Confirmar",
           onPress: async () => {
             await deleteUsuario(id);
-            onDelete(id);
             Alert.alert("Sucesso", "Usuario deletado com sucesso!");
           },
         },
