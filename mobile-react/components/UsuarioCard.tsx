@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { deleteUsuario } from '@/repository/Usuario';
 import Toast from 'react-native-toast-message';
 
 // Definindo os tipos para as props do componente
-interface PostCardProps {
+interface AlunoCardProps {
   id: string;
   name: string;
   email: string;
@@ -17,18 +17,15 @@ interface PostCardProps {
 }
 
 
-export default function PostCard({
-
+export default function UsuarioCard({
   id,
   name,
   email,
   password,
   role,
   onDelete,
-}: PostCardProps) {
+}: AlunoCardProps) {
   const [token, setToken] = useState("");
-  //const params: { idTeste: string } = useLocalSearchParams();
-  //const { idTeste } = params;
 
   useEffect(() => {
     // Obter token do armazenamento local
@@ -44,8 +41,9 @@ export default function PostCard({
   }, []);
 
   const handleEdit = () => {
-    console.log('>>> É PARA EDITAR <<<');
-    router.push(`/posts/edit/${id}`);
+    console.log(`>>> É PARA EDITAR: ${id} <<<`);
+    router.push(`/aluno/edit/${id}`);
+
   };
 
   const handleDelete = async () => {

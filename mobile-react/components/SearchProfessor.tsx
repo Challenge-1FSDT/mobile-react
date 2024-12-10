@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import AlunoCard from './AlunoCard'; // Certifique-se de que PostCard foi adaptado para React Native
+import AlunoCard from './UsuarioCard'; // Certifique-se de que PostCard foi adaptado para React Native
 import { Post } from '../types/Post';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Usuario } from '@/types/Usuario';
+import UsuarioCard from './UsuarioCard';
 
 
 interface SearchProps {
-  posts: Post[];
+  professores: Usuario[];
   onDelete: (id: string) => void; // Adicionando a propriedade onDelete
 }
 
-export default function Search({ posts, onDelete } : SearchProps) {
+export default function Search({ professores, onDelete } : SearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [token, setToken] = useState("");
 
@@ -30,18 +32,18 @@ export default function Search({ posts, onDelete } : SearchProps) {
 
 
   // Filtrando as postagens com base no termo de busca
-  const filteredAlunos = posts.filter((post : any) =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.content.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredAlunos = professores.filter((professor : any) =>
+    professor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    professor.email.toLowerCase().includes(searchTerm.toLowerCase()) 
   );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Buscar postagens</Text>
+      <Text style={styles.heading}>Buscar Professor</Text>
       <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Título ou conteúdo de um post"
+            placeholder="Nome ou E-mail do professor"
             placeholderTextColor="#888"
             value={searchTerm}
             onChangeText={setSearchTerm} // Atualiza o valor da busca
@@ -51,7 +53,7 @@ export default function Search({ posts, onDelete } : SearchProps) {
                 style={styles.readMoreButton}
                 onPress={() => router.replace('/posts/create/page')}
                 >
-                <Text style={styles.readMoreText}>Novo Post</Text>
+                <Text style={styles.readMoreText}>Novo Professor</Text>
 
               </TouchableOpacity>
               ): null
@@ -62,11 +64,12 @@ export default function Search({ posts, onDelete } : SearchProps) {
         keyExtractor={(item) => item.id.toString()} // Certifique-se de que o ID é uma string
         renderItem={({ item }) => (
           <View style={styles.listItem}>
-            <AlunoCard
+            <UsuarioCard
               id={item.id}
-              title={item.title}
-              description={item.content}
-              author={item.author}
+              name={item.name}
+              email={item.email}
+              password={item.password}
+              role={item.role}
               onDelete={onDelete}
             />
           </View>

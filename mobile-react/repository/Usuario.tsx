@@ -1,6 +1,34 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Usuario, UsuarioForm } from '../types/Usuario';
 
+export async function getUsuario(id: string): Promise<Usuario> {
+
+  try {
+      const token = await AsyncStorage.getItem('token');
+      const res = await fetch(`https://api.capoteimeu.uno/users/${id}`,
+          {
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Usa o token no cabeçalho
+            },
+          }
+      );
+
+      console.log('(status): '+ res.status);
+      console.log('(Header): '+res.headers);
+      console.log('(Body): '+res.body);
+
+      if (!res.ok) {
+        throw new Error('Failed to fetch data');
+      }
+
+      return res.json();
+
+  } catch (error) {
+    console.error("Erro ao buscar alunos:", error); 
+  }
+}
 
 
 export async function getUsuarios(perfil : string): Promise<Usuario[]> {
@@ -70,11 +98,12 @@ function traduzirMensagem(erro: string): string {
   return traducoes[erro] || erro; // Retorna a tradução ou o texto original, se não encontrado
 }
 
-export async function createUsuario(name: string,
-                                    email: string, 
-                                    password: string, 
-                                    role: string): Promise<string> {
-
+export async function createUsuario(
+  name: string,
+  email: string,
+  password: string,
+  role: string
+): Promise<string> {
   console.log('=========================');
   console.log(`nome: ${name}, email: ${email}, senha: ${password}, role: ${role}`);
   console.log('=========================');
@@ -82,47 +111,49 @@ export async function createUsuario(name: string,
   const token = await AsyncStorage.getItem('token'); // Obtém o token do AsyncStorage
 
   try {
+      const teste = JSON.stringify({ name, email, password, role });
+
+      console.log('****************************');
+      console.log('>>> Teste <<<');
+      console.log(teste); // Mostra o JSON formatado
+      console.log('****************************');
 
       const response = await fetch('https://api.capoteimeu.uno/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Usa o token no cabeçalho
-        },
-        body: JSON.stringify(
-          {
-            name, // Corrigido para "name"
-            email,
-            password, // Corrigido para "password"
-            role,
-          }
-        ),
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`, // Usa o token no cabeçalho
+          },
+          body: teste,
       });
 
-      //const responseBody = await response.text();
-      const responseBody = await response.json();
-      console.log("createUsuario >> Resposta da API:", responseBody);
+      console.log('Status da resposta:', response.status);
 
-      if (!response.ok) {
-        // Concatena as mensagens de erro (se existirem) ou usa um fallback genérico
-        /*
-        const errorMessage = responseBody.message
-          ? responseBody.message.join(', ')
-          : 'Erro desconhecido ao criar o usuário.';
-        throw new Error(errorMessage); // Lança o erro com a mensagem apropriada
-        */
-        const mensagensTraduzidas = responseBody.message
-              .map((msg: string) => traduzirMensagem(msg)) // Traduz cada mensagem
-              .join(' e '); // Junta as mensagens em uma string
-        throw new Error(mensagensTraduzidas); // Lança o erro com as mensagens traduzidas
+      // Tratar status 201 (criado com sucesso)
+      if (response.status === 201) {
+          console.log("Usuário criado com sucesso. Nenhum corpo de resposta esperado.");
+          return 'Usuário criado com sucesso!';
       }
-    
-      return 'Usuário criado com sucesso!';
+
+      // Tratar outros status e verificar se há um corpo JSON
+      const contentType = response.headers.get('Content-Type');
+      if (contentType?.includes('application/json')) {
+          const responseBody = await response.json();
+          console.log("Resposta da API:", responseBody);
+
+          if (!response.ok) {
+              const errorMessages = responseBody.message || 'Erro desconhecido';
+              throw new Error(Array.isArray(errorMessages) ? errorMessages.join(', ') : errorMessages);
+          }
+
+          return 'Usuário criado com sucesso!';
+      } else {
+          const rawResponse = await response.text();
+          console.error("Resposta inesperada da API:", rawResponse);
+          throw new Error(`Resposta inesperada. Status: ${response.status}`);
+      }
   } catch (error) {
-    console.log('Erro ao criar usuário: ', error);
-    // Repassa o erro para quem chamou a função
-    throw error instanceof Error ? error : new Error('Erro desconhecido ao criar o usuário.');
+      console.log('Erro ao criar usuário: ', error);
+      throw error instanceof Error ? error : new Error('Erro desconhecido ao criar o usuário.');
   }
-
 }
-

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import AlunoCard from './AlunoCard'; // Certifique-se de que PostCard foi adaptado para React Native
+import AlunoCard from './UsuarioCard'; // Certifique-se de que PostCard foi adaptado para React Native
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Usuario } from '@/types/Usuario';
+import UsuarioCard from './UsuarioCard';
 
 
 interface SearchProps {
@@ -33,8 +34,7 @@ export default function SearchAluno({ alunos, onDelete } : SearchProps) {
   // Filtrando as postagens com base no termo de busca
   const filteredAlunos = alunos.filter((aluno : any) =>
     aluno.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    aluno.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    aluno.password.toLowerCase().includes(searchTerm.toLowerCase())
+    aluno.email.toLowerCase().includes(searchTerm.toLowerCase()) 
   );
 
   return (
@@ -65,7 +65,7 @@ export default function SearchAluno({ alunos, onDelete } : SearchProps) {
         keyExtractor={(item) => item.id.toString()} // Certifique-se de que o ID é uma string
         renderItem={({ item }) => (
           <View style={styles.listItem}>
-            <AlunoCard
+            <UsuarioCard
               id={item.id}
               name={item.name}
               email={item.email}

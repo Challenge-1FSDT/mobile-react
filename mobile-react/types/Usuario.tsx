@@ -7,8 +7,8 @@ export type Usuario = {
 };
 
 export type UsuarioForm = {
-  name: string;
+  nome: string;
   email: string;
-  password: string;
+  senha: string;
   role: string;
 };

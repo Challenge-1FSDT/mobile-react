@@ -50,7 +50,7 @@ export default function Navbar() {
 
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => router.navigate('/aluno/Professor')}
+                onPress={() => router.navigate('/professor/Professor')}
                 >
                 <Text style={styles.buttonText}>Professores</Text>
               </TouchableOpacity>

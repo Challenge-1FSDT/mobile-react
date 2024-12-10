@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Post, PostForm } from '../types/Post';
+import { UsuarioForm } from '@/types/Usuario';
 
 export async function getPosts(): Promise<Post[]> {
   try {
