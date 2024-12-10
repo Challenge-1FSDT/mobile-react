@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, Alert } from "react-native";
 import Search from "../../components/SearchAluno";
-import { getAlunos } from "../../repository/Usuario";
+import { getUsuario, getUsuarios } from "../../repository/Usuario";
 import { Usuario } from "../../types/Usuario";
-import SearchAluno from "../../components/SearchAluno";
+import SearchProfessor from "../../components/SearchProfessor";
 import Navbar from "@/components/Navbar";
 
 export default function Professor() {
-  const [alunos, setAluno] = useState<Usuario[]>([]);
+  const [professores, setProfessor] = useState<Usuario[]>([]);
   
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getAlunos('user');
-      setAluno(Array.isArray(data) ? data : []);
+      const data = await getUsuarios('admin');
+      setProfessor(Array.isArray(data) ? data : []);
     };
 
     fetchData();
@@ -20,15 +20,15 @@ export default function Professor() {
 
   const handleDeleteAluno = (id: string) => {
     Alert.alert(
-      "Tem certeza que deseja deletar este post?",
+      "Tem certeza que deseja deletar este usuário?",
       "",
       [
         { text: "Cancelar", style: "cancel" },
         {
           text: "Deletar",
           onPress: () => {
-            setAluno((prevAluno) => prevAluno.filter((aluno) => aluno.id !== id));
-            Alert.alert("Post deletado com sucesso");
+            setProfessor((prevProfessor) => prevProfessor.filter((professor) => professor.id !== id));
+            Alert.alert("Usuário deletado com sucesso");
           },
         },
       ]
@@ -39,7 +39,7 @@ export default function Professor() {
   return (
     <View style={styles.container}>
     <Navbar></Navbar>
-    <SearchAluno alunos={alunos} onDelete={handleDeleteAluno} />
+    <SearchProfessor professores={professores} onDelete={handleDeleteAluno} />
   </View>
   );
 
