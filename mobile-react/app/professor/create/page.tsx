@@ -4,7 +4,6 @@ import Navbar from '../../../components/Navbar';
 import { router } from "expo-router";
 
 import { createUsuario } from '../../../repository/Usuario'; // Certifique-se de que createPost está configurado para React Native
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { extractUserName } from '@/repository/user';
 

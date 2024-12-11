@@ -20,6 +20,8 @@ export default function Alunos() {
     fetchData();
   }, []);
 
+  const contexto = 'aluno';
+
   const handleDeleteAluno = (id: string) => {
     Alert.alert(
       "Tem certeza que deseja deletar este post?",
@@ -41,7 +43,7 @@ export default function Alunos() {
   return (
     <View style={styles.container}>
     <Navbar></Navbar>
-    <SearchAluno alunos={alunos} onDelete={handleDeleteAluno} />
+    <SearchAluno alunos={alunos} contexto={contexto} />
   </View>
   );
 

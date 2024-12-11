@@ -13,7 +13,7 @@ interface AlunoCardProps {
   email: string;
   password: string;
   role: string;
-  onAlterar: string;
+  contextoCard: string;
 }
 
 
@@ -23,11 +23,17 @@ export default function UsuarioCard({
   email,
   password,
   role,
-  onAlterar,
+  contextoCard,
 }: AlunoCardProps) {
   const [token, setToken] = useState("");
 
   useEffect(() => {
+
+    console.log("---------------------");
+    console.log(`ID: ${id} - Nome: ${name} - E-mail: ${email} - Password: ${password} - Role: ${role} - onAlterar: ${contextoCard}`);
+    console.log("---------------------");
+
+
     // Obter token do armazenamento local
     const fetchToken = async () => {
       try {
@@ -41,8 +47,8 @@ export default function UsuarioCard({
   }, []);
 
   const handleEdit = () => {
-    console.log(`>>> É PARA EDITAR: ${id} <<<`);
-    router.push(`/${onAlterar}/edit/${id}`);
+    console.log(`>>> É PARA EDITAR (perfil: ${contextoCard}): ${id} <<<`);
+    router.push(`/${contextoCard}/edit/${id}`);
 
   };
 
@@ -62,6 +68,13 @@ export default function UsuarioCard({
           onPress: async () => {
             await deleteUsuario(id);
             Alert.alert("Sucesso", "Usuario deletado com sucesso!");
+            
+            if(contextoCard=='aluno'){
+              router.push(`/${contextoCard}/Alunos`);
+            }else{
+              router.push(`/${contextoCard}/Professor`);
+            }
+              
           },
         },
       ]

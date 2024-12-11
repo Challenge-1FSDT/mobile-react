@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import AlunoCard from './UsuarioCard'; // Certifique-se de que PostCard foi adaptado para React Native
-import { Post } from '../types/Post';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Usuario } from '@/types/Usuario';
@@ -11,14 +9,19 @@ import UsuarioCard from './UsuarioCard';
 interface SearchProps {
   professores: Usuario[];
   //onDelete: (id: string) => void; // Adicionando a propriedade onDelete
-  onAlterar: string;
+  contexto: string;
 }
 
-export default function Search({ professores, onAlterar } : SearchProps) {
+export default function Search({ professores, contexto } : SearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [token, setToken] = useState("");
 
   useEffect(() => {
+
+    console.log('--------------------------------------');
+    console.log(`qual o valor da variavel? ${contexto}`);
+    console.log('--------------------------------------');
+
     // Obter token do armazenamento local
     const fetchToken = async () => {
       try {
@@ -52,7 +55,7 @@ export default function Search({ professores, onAlterar } : SearchProps) {
           {token ? (
               <TouchableOpacity
                 style={styles.readMoreButton}
-                onPress={() => router.replace(`/${onAlterar}/create/page`)}
+                onPress={() => router.replace(`/professor/create/page`)}
                 >
                 <Text style={styles.readMoreText}>Novo Professor</Text>
 
@@ -71,7 +74,7 @@ export default function Search({ professores, onAlterar } : SearchProps) {
               email={item.email}
               password={item.password}
               role={item.role}
-              onAlterar={onAlterar}
+              contextoCard={contexto}
             />
           </View>
         )}

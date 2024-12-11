@@ -9,10 +9,10 @@ import UsuarioCard from './UsuarioCard';
 
 interface SearchProps {
   alunos: Usuario[];
-  onDelete: (id: string) => void; // Adicionando a propriedade onDelete
+  contexto: string; // Adicionando a propriedade onDelete
 }
 
-export default function SearchAluno({ alunos, onDelete } : SearchProps) {
+export default function SearchAluno({ alunos, contexto } : SearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [token, setToken] = useState("");
 
@@ -71,7 +71,7 @@ export default function SearchAluno({ alunos, onDelete } : SearchProps) {
               email={item.email}
               password={item.password}
               role={item.role}
-              onDelete={onDelete}
+              contextoCard={contexto}
             />
           </View>
         )}
