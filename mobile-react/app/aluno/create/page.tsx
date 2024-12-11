@@ -49,14 +49,6 @@ export default function CreatePostPage() {
     <View style={styles.container}>
       <Navbar />
       <Text style={styles.title}>Adicionar Novo Aluno</Text>
-      
-      {error && (
-        <TouchableOpacity onPress={() => router.replace('/login/FormLogin')}>
-          <Text style={styles.errorText}>
-            Usuário não autenticado, clique para fazer login
-          </Text>
-        </TouchableOpacity>
-      )}
 
       <View style={styles.form}>
         <View style={styles.inputContainer}>
