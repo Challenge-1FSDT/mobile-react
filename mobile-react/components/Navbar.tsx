@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link, router } from "expo-router";
+import { decodificar } from '@/util/utilJwt';
 
 export default function Navbar() {  
   const [token, setToken] = useState('');
@@ -13,6 +14,7 @@ export default function Navbar() {
     };
 
     getToken();
+
   }, []);
 
   const handleLogout = async () => {
@@ -21,6 +23,9 @@ export default function Navbar() {
   }
 
   if (token) {
+
+    const perfil = decodificar(token);
+
     return (
       <View style={styles.navbar}>
         <View style={styles.navContent}>
@@ -42,18 +47,22 @@ export default function Navbar() {
                 <Text style={styles.buttonText}>Posts</Text>
               </TouchableOpacity>
               
-              <TouchableOpacity style={styles.button} 
-                onPress={() => router.replace('/aluno/Alunos')}
-                >
-                <Text style={styles.buttonText}>Alunos</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => router.navigate('/professor/Professor')}
-                >
-                <Text style={styles.buttonText}>Professores</Text>
-              </TouchableOpacity>
+              {(perfil.r=='admin')  ? (
+                        <View style={{ flexDirection: 'column' }}>
+                          <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => router.replace('/aluno/Alunos')}
+                          >
+                            <Text style={styles.buttonText}>Alunos</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => router.navigate('/professor/Professor')}
+                          >
+                            <Text style={styles.buttonText}>Professores</Text>
+                          </TouchableOpacity>
+                        </View>
+                      ) : null}
               
               <TouchableOpacity
                 style={styles.button} onPress={handleLogout}>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import AlunoCard from './UsuarioCard'; // Certifique-se de que PostCard foi adaptado para React Native
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Usuario } from '@/types/Usuario';

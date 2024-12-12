@@ -4,6 +4,7 @@ import PostCard from './PostCard'; // Certifique-se de que PostCard foi adaptado
 import { Post } from '../types/Post';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { decodificar } from '@/util/utilJwt';
 
 
 interface SearchProps {
@@ -35,6 +36,8 @@ export default function Search({ posts, onDelete } : SearchProps) {
     post.content.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const perfil = decodificar(token);
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Buscar postagens</Text>
@@ -46,7 +49,7 @@ export default function Search({ posts, onDelete } : SearchProps) {
             value={searchTerm}
             onChangeText={setSearchTerm} // Atualiza o valor da busca
           />
-          {token ? (
+          {token && (perfil.r=='admin')? (
               <TouchableOpacity
                 style={styles.readMoreButton}
                 onPress={() => router.replace('/posts/create/page')}

@@ -4,8 +4,8 @@ import { router, useLocalSearchParams } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { deletePost } from '@/repository/posts';
-import Toast from 'react-native-toast-message';
-import { decodeJWT } from '@/util/utilJwt';
+import { decodificar } from '@/util/utilJwt';
+
 
 // Definindo os tipos para as props do componente
 interface PostCardProps {
@@ -25,6 +25,7 @@ export default function PostCard({
   onDelete,
 }: PostCardProps) {
   const [token, setToken] = useState("");
+  const [perfil, setPerfil] = useState("");
   //const params: { idTeste: string } = useLocalSearchParams();
   //const { idTeste } = params;
 
@@ -36,10 +37,11 @@ export default function PostCard({
 
         console.log('***************');
         console.log('Token: '+token);
-        const decodedData = decodeJWT(token||'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpIjoiNmMxM2YwMjktODYzOS00ZWJiLWFjYmMtMWM0NDkxYzY1Y2U2IiwiZSI6InByb2Zlc3NvckBmaWFwLmNvbSIsInIiOiJhZG1pbiIsImlhdCI6MTczMzg4NjcxMCwiZXhwIjoxNzMzOTczMTEwfQ.ny2FphxyKepBabdVdqEyhFaVCR3dMoP1XGsxJfZz-Q8');
-        console.log('decodedData >> '+decodedData);
+        const decodedData = decodificar(token||'');
+        
         console.log('***************');
-
+        
+        setPerfil(decodedData ||"user");
         setToken(token || "");
       } catch (error) {
         console.error("Erro ao obter token:", error);
@@ -88,7 +90,7 @@ export default function PostCard({
       <Text style={styles.author}>Autor: {author}</Text>
       <Text style={styles.description} numberOfLines={5}>{description}</Text>
       <View style={styles.actions}>
-        {token ? (
+        {token && (perfil.r=='admin') ? (
           <View style={styles.editDeleteContainer}>
             <TouchableOpacity onPress={handleEdit} style={styles.iconButton}>
               <Icon name="edit" size={16} color="#FFF" />
