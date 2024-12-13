@@ -48,7 +48,7 @@ export default function Navbar() {
               </TouchableOpacity>
               
               {(perfil.r=='admin')  ? (
-                        <View style={{ flexDirection: 'column' }}>
+                        <View style={{  flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                           <TouchableOpacity
                             style={styles.button}
                             onPress={() => router.replace('/aluno/Alunos')}

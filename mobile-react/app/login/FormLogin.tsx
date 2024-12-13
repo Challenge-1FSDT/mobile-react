@@ -63,23 +63,6 @@ export default function LoginForm(): JSX.Element {
 
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-            {/* User Type Selection */}
-            
-            <View style={styles.radioGroup}>
-              <TouchableOpacity
-                style={[styles.radioOption, userType === "user" && styles.radioSelected]}
-                onPress={() => setUserType("user")}
-              >
-                <Text style={styles.radioText}>Aluno</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.radioOption, userType === "admin" && styles.radioSelected]}
-                onPress={() => setUserType("admin")}
-              >
-                <Text style={styles.radioText}>Professor</Text>
-              </TouchableOpacity>
-            </View>
-              
             {/* Email Input */}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>username</Text>
