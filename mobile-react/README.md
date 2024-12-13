@@ -106,6 +106,12 @@ Para garantir que dados importantes, como o token de autenticação ou preferên
 
 ---
 
+![QRCode para Baixar o apk](image.png)
+
+Caso não consiga baixar o APK do aplicativo, [clique aqui](https://expo.dev/accounts/anderson361163/projects/mobile-react/builds/2f2ce5ab-4a60-43d7-80ae-6b1eaf72f192)
+
+---
+
 ## Installation
 
 ```bash
