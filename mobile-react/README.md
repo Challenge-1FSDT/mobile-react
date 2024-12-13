@@ -4,6 +4,14 @@
 [Google Drive](https://drive.google.com/drive/folders/1VBJzdS7BMZR1wPOAjoKoWCTaJOzE7sgD?usp=sharing) <br>
 [GitHub](https://github.com/Challenge-1FSDT/mobile-react)
 
+## APK para dowload
+
+Link para download do APK 
+
+![QRCode para Baixar o apk](image.png)
+
+Caso não consiga baixar o APK do aplicativo, [clique aqui](https://expo.dev/accounts/anderson361163/projects/mobile-react/builds/2f2ce5ab-4a60-43d7-80ae-6b1eaf72f192)
+
 ## Grupo 14 - Membros
 - RM353230 Anelise Estevam
 - RM355290 Anderson da Silva Machado 
