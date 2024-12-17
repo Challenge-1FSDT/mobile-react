@@ -72,14 +72,42 @@ export async function deleteUsuario(id:string): Promise<void>{
 
 export async function updateUsuario(id: string, post: UsuarioForm): Promise<void> {
   const token = await AsyncStorage.getItem('token'); // Obtém o token do AsyncStorage
-  await fetch(`https://api.capoteimeu.uno/users/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`, // Usa o token no cabeçalho
-    },
-    body: JSON.stringify(post),
-  });
+
+  console.log('---------------------');
+  console.log(" >>> ID: " + id);
+  console.log('---------------------');
+
+  try {
+    // Faz a requisição
+    const resultado = await fetch(`https://api.capoteimeu.uno/users/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, // Usa o token no cabeçalho
+      },
+      body: JSON.stringify(post),
+    });
+
+    console.log('-------------------------------');
+    console.log("Status da requisição:", resultado.status);
+
+    // Obtém o corpo da resposta apenas uma vez
+    const responseBody = await resultado.json();
+
+    if (!resultado.ok) {
+      // Caso tenha erro
+      console.log(">>>> Erro no servidor:", responseBody);
+      throw new Error(`Erro ${resultado.status}: ${JSON.stringify(responseBody)}`);
+    }
+
+    console.log(">>>> Sucesso:", responseBody);
+
+  } catch (error) {
+    console.error(">>> Exceção capturada:", error
+    );
+  }
+
+  console.log('-------------------------------');
 }
 
 export async function searchUsuario(query: string): Promise<Usuario[]> {
