@@ -67,7 +67,7 @@ export default function UsuarioCard({
           text: "Confirmar",
           onPress: async () => {
             await deleteUsuario(id);
-            Alert.alert("Sucesso", "Usuario deletado com sucesso!");
+            Alert.alert("Sucesso", " (Usuário) - Usuario deletado com sucesso!");
             
             if(contextoCard=='aluno'){
               router.push(`/${contextoCard}/Alunos`);

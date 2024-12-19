@@ -71,6 +71,18 @@ export async function deleteUsuario(id:string): Promise<void>{
 }
 
 export async function updateUsuario(id: string, post: UsuarioForm): Promise<void> {
+
+  console.log('-------------------------');
+
+  console.log('--------------------------');
+  console.log(' <<< updateUsuario >>> ');
+
+  console.log(' >>> ID: '+id);
+  console.log(' >>> Senha: '+ post.password);
+  console.log(' >>> Body: ', JSON.stringify(post));
+
+  console.log('--------------------------');
+
   const token = await AsyncStorage.getItem('token'); // Obtém o token do AsyncStorage
   await fetch(`https://api.capoteimeu.uno/users/${id}`, {
     method: 'PUT',
@@ -78,8 +90,9 @@ export async function updateUsuario(id: string, post: UsuarioForm): Promise<void
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`, // Usa o token no cabeçalho
     },
-    body: JSON.stringify(post),
+    body: JSON.stringify( { id, ...post }),
   });
+  
 }
 
 export async function searchUsuario(query: string): Promise<Usuario[]> {

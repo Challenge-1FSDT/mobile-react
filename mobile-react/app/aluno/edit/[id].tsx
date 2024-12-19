@@ -8,9 +8,9 @@ import { getUsuario, updateUsuario } from '@/repository/Usuario';
 export default function EditPostPage() {
   const params: { id: string } = useLocalSearchParams();
   const { id } = params;
-  const [nome, setNome] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  let [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const role = 'user';
 
@@ -18,9 +18,9 @@ export default function EditPostPage() {
     const fetchPost = async () => {
       try {
         const usuario = await getUsuario(id);
-        setNome(usuario.name);
+        setName(usuario.name);
         setEmail(usuario.email);
-        setSenha(usuario.password);
+        setPassword(usuario.password);
       } catch (error) {
         setError(error instanceof Error ? error.message : "An unknown error occurred");
         Alert.alert('Ocorre um erro de '+ (error instanceof Error ? error.message : "desconhecido"));
@@ -35,8 +35,20 @@ export default function EditPostPage() {
     try {
       const token = await AsyncStorage.getItem("token"); // Obtém o token do AsyncStorage
       if (token) {
-        await updateUsuario(id, { nome, email, senha, role });
-        Alert.alert("Sucesso", "Post atualizado com sucesso", [
+
+        console.log('**************');
+        console.log('TESTE')
+
+        /*
+        if(password==undefined || password ==null){
+          password='';
+        }*/
+
+
+        await updateUsuario(id, { name, email, password, role });
+        console.log('**************');
+
+        Alert.alert("Sucesso", "Usuário atualizado com sucesso", [
           { text: "OK", onPress: () => router.replace('/aluno/Alunos') }, // Navega para a tela inicial
         ]);
       } else {
@@ -44,7 +56,7 @@ export default function EditPostPage() {
       }
     } catch (error) {
       setError(error instanceof Error ? error.message : "An unknown error occurred");
-      Alert.alert("Erro", error instanceof Error ? error.message : "Ocorreu um erro desconhecido");
+      Alert.alert("Erro (aluno)", error instanceof Error ? error.message : "Ocorreu um erro desconhecido");
     }
   };
   return (
@@ -60,8 +72,8 @@ export default function EditPostPage() {
             <Text style={styles.label}>Nome</Text>
             <TextInput
               style={styles.input}
-              value={nome}
-              onChangeText={setNome}
+              value={name}
+              onChangeText={setName}
               placeholder="Nome"
             />
           </View>
@@ -80,8 +92,8 @@ export default function EditPostPage() {
             <Text style={styles.label}>Senha</Text>
             <TextInput
               style={styles.input}
-              value={senha}
-              onChangeText={setSenha}
+              value={password}
+              onChangeText={setPassword}
               placeholder="Senha"
             />
           </View>
