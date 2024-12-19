@@ -35,19 +35,7 @@ export default function EditPostPage() {
     try {
       const token = await AsyncStorage.getItem("token"); // Obtém o token do AsyncStorage
       if (token) {
-
-        console.log('**************');
-        console.log('TESTE')
-
-        /*
-        if(password==undefined || password ==null){
-          password='';
-        }*/
-
-
         await updateUsuario(id, { name, email, password, role });
-        console.log('**************');
-
         Alert.alert("Sucesso", "Usuário atualizado com sucesso", [
           { text: "OK", onPress: () => router.replace('/aluno/Alunos') }, // Navega para a tela inicial
         ]);
