@@ -77,8 +77,6 @@ export async function updateUsuario(id: string, post: UsuarioForm): Promise<void
   console.log('--------------------------');
   console.log(' <<< updateUsuario >>> ');
 
-  console.log(' >>> ID: '+id);
-  console.log(' >>> Senha: '+ post.password);
   console.log(' >>> Body: ', JSON.stringify(post));
 
   console.log('--------------------------');
@@ -90,7 +88,7 @@ export async function updateUsuario(id: string, post: UsuarioForm): Promise<void
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`, // Usa o token no cabeçalho
     },
-    body: JSON.stringify( { id, ...post }),
+    body: JSON.stringify( post ),
   });
   
 }

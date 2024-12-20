@@ -39,7 +39,7 @@ export default function EditPostPage() {
         Alert.alert("Sucesso", "Usuário atualizado com sucesso", [
           { text: "OK", onPress: () => router.replace('/aluno/Alunos') }, // Navega para a tela inicial
         ]);
-      } else {
+      } else {   
         throw new Error("Token not found");
       }
     } catch (error) {
