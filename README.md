@@ -80,8 +80,8 @@ sistema.
    - [X] -  Realizar chamadas aos endpoints REST para obter, criar, editar e excluir alunos.
    - [X] -  Realizar chamadas aos endpoints REST para obter, criar, editar e excluir professores.
    - [X] -  Realizar chamadas aos endpoints REST para autenticação.
-   - [ ] -  Validar permissão para professores e alunos, onde professores podem modificar/criar um post e os alunos podem apenas visualizar.
-   - [ ] -  Gerenciar o estado da aplicação com ferramentas como Context API ou Redux (opcional).
+   - [x] -  Validar permissão para professores e alunos, onde professores podem modificar/criar um post e os alunos podem apenas visualizar.
+   - [x] -  Gerenciar o estado da aplicação com ferramentas como Context API ou Redux (opcional).
 
 4. Documentação
    - [X] -  Documentação técnica detalhada do mobile no README do repositório, incluindo setup inicial, arquitetura da aplicação e guia
