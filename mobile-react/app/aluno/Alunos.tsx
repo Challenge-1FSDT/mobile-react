@@ -22,6 +22,7 @@ export default function Alunos() {
 
   const contexto = 'aluno';
 
+  /*
   const handleDeleteAluno = (id: string) => {
     Alert.alert(
       "Tem certeza que deseja deletar este post?",
@@ -32,13 +33,14 @@ export default function Alunos() {
           text: "Deletar",
           onPress: () => {
             setAluno((prevAluno) => prevAluno.filter((aluno) => aluno.id !== id));
-            Alert.alert("Post deletado com sucesso");
+            Alert.alert("Usuário deletado com sucesso");
           },
         },
       ]
     );
 
   };
+  */
 
   return (
     <View style={styles.container}>

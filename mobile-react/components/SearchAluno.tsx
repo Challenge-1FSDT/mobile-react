@@ -54,7 +54,6 @@ export default function SearchAluno({ alunos, contexto } : SearchProps) {
                 style={styles.readMoreButton}
                 onPress={() => router.replace('/aluno/create/page')}>
                 <Text style={styles.readMoreText}>Novo Aluno</Text>
-
               </TouchableOpacity>
               ): null
           }
