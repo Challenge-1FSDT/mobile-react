@@ -3,6 +3,7 @@
 ## Acesso à documentação detalhada e demonstração de uso (video)
 [Google Drive](https://drive.google.com/drive/folders/1VBJzdS7BMZR1wPOAjoKoWCTaJOzE7sgD?usp=sharing) <br>
 [GitHub](https://github.com/Challenge-1FSDT/mobile-react)
+[APK](https://expo.dev/accounts/anderson361163/projects/mobile-react/builds/a6944e3d-d063-4c4c-bc5a-8f2cae1ef789)
 
 ## Grupo 14 - Membros
 - RM353230 Anelise Estevam
@@ -12,6 +13,10 @@
 
 ## Data de entrega
 - 03/12/2024
+
+# Download do App
+![QR Code para Download do APK](https://github.com/user-attachments/assets/b6f637b1-65de-47fd-b5c7-24d4a93bb292)
+[Clique aqui para baixa](https://expo.dev/accounts/anderson361163/projects/mobile-react/builds/a6944e3d-d063-4c4c-bc5a-8f2cae1ef789)
 
 ## Requisitos
 ### Funcionais
